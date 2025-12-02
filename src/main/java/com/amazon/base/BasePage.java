@@ -11,6 +11,10 @@ public class BasePage {
 
 	protected WebDriver driver;
 
+	public BasePage(WebDriver driver) {
+		this.driver=driver;
+	}
+
 	public WebDriver getDriver(String browser) {
 
 		switch (browser) {
@@ -42,7 +46,7 @@ public class BasePage {
 	}
 	
 	// verify title
-	public String verifyTitle() {
+	public String getTitleofPage() {
 		return driver.getTitle();
 	}
 	
@@ -51,8 +55,20 @@ public class BasePage {
 		return driver.getCurrentUrl();
 	}
 
-	public void verifyMobileNumberFunctionality() {
+	public void navigateBack() {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void navigateForward() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }
