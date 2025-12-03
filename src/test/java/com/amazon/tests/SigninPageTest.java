@@ -8,19 +8,19 @@ import com.amazon.basetest.BaseTest;
 
 public class SigninPageTest extends BaseTest {
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun=true)
 	public void setupPage() {
 		//open sigin page from homepage
 		homePage.openSiginPage();
 	}
 	
-	@Test
+	@Test(groups={"sanity"})
 	public void isLogoPresentTest() {
 		
 		Assert.assertTrue(signinPage.verifyLogo(),"ERROR -- Logo is not Present");
 	}
 
-	@Test
+	@Test(groups={"sanity"})
 	public void pageTitleTest() {
 		
 		Assert.assertEquals(signinPage.getTitleofPage(),"amazon.in","ERROR- page title doesnot match");
@@ -32,7 +32,7 @@ public class SigninPageTest extends BaseTest {
 	 * refresh the page and verify if we navigate to same page 
 	 */
 	
-	@Test
+	@Test(groups={"regression"})
 	public void backAndForthScenarioTest() {
 		basepage.navigateBack();
 		Assert.assertEquals(homePage.getTitleofPage(), "Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in");
@@ -60,6 +60,7 @@ public class SigninPageTest extends BaseTest {
 	public void siginWithValidCredentailTest() {
 		signinPage.siginWithValidCredentials("abc@test.com","asdasdfsfd");
 		signinPage.clickContinueBtn();
+		Assert.assertEquals(homePage.getTitleofPage(),"Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in");
 	}
 	
 	

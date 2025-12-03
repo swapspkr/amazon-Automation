@@ -1,53 +1,48 @@
 package com.amazon.tests;
 
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.amazon.basetest.BaseTest;
 
-public class RegistrationPageTest extends BaseTest {
-
-	@BeforeMethod
+public class RegistrationPageTest extends BaseTest{
+	
+	
+	@BeforeMethod(alwaysRun=true)
 	public void setupPage() {
-
+	
 		// open registration page from homepage
 		homePage.openRegistrationPage();
-
+		
 	}
 
-	@Test
+	@Test(groups= {"sanity"})
 	public void isLogoPresentTest() {
-
-		Assert.assertTrue(registrationPage.verifyLogo(), "ERROR -- Logo is not Present");
+		
+		Assert.assertTrue(basepage.verifyLogo(),"ERROR -- Logo is not Present");
 	}
-
-	@Test
+	
+	@Test(groups= {"sanity"})
 	public void pageTitleTest() {
-
-		Assert.assertEquals(registrationPage.getTitleofPage(), "Amazon Registration",
-				"ERROR- page title doesnot match");
+		
+		Assert.assertEquals(registrationPage.getTitleofPage(),"Amazon Registration","ERROR- page title doesnot match");
 	}
-
-	// verify input fields/field label/links/button on sigin page
-	@Test
-	public void fieldsOnThePageTests() {
-
-		signinPage.verifyPresenceOfElementOnPage();
-		// we can store all expected fields in excel and compare actual field at run
-		// time
-		// Assert all fields and print if any field is not present from expected list
-	}
-
-	@Test
+	
+	@Test(groups= {"regression"})
 	public void verifyMobileNumberTest() {
-		registrationPage.verifyMobileNumberFunctionality();
+		registrationPage.verifyMobileNumberFunctionality("8585828289", "TestUser","Testuser");
+		Assert.assertEquals(registrationPage.getTitleofPage(),"Authentication required");
 	}
-
+	
 	@Test
-	public void verifySigninLink() {
+	public void signinLinkTest() {
 		registrationPage.clickOnSigninLink();
-		Assert.assertEquals(signinPage.getTitleofPage(), "Amazon Sign In",
-				"ERROR- Signin Page not opened after clicking");
+		Assert.assertEquals(signinPage.getTitleofPage(), "amazon.in/ap/signin");
+		Assert.assertTrue(signinPage.getSiginText().isDisplayed());
 	}
+	
+	
+
 }
