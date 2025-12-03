@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Amazon_Sanity_Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Amazon_SigninPage_Sanity_Test(failed)">
+    <groups>
+      <run>
+        <include name="sanity"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.amazon.tests.SigninPageTest">
+        <methods>
+          <include name="setupPage"/>
+          <include name="pageTitleTest"/>
+          <include name="isLogoPresentTest"/>
+        </methods>
+      </class> <!-- com.amazon.tests.SigninPageTest -->
+    </classes>
+  </test> <!-- Amazon_SigninPage_Sanity_Test(failed) -->
+  <test thread-count="5" name="Amazon_RegistrationPageTest_Sanity_Test(failed)">
+    <groups>
+      <run>
+        <include name="sanity"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.amazon.tests.RegistrationPageTest">
+        <methods>
+          <include name="pageTitleTest"/>
+          <include name="setupPage"/>
+          <include name="isLogoPresentTest"/>
+        </methods>
+      </class> <!-- com.amazon.tests.RegistrationPageTest -->
+    </classes>
+  </test> <!-- Amazon_RegistrationPageTest_Sanity_Test(failed) -->
+</suite> <!-- Failed suite [Amazon_Sanity_Suite] -->

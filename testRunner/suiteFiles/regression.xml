@@ -6,12 +6,15 @@
 			<include name="regression"></include>
 		</run>
 	</groups>
+	<listeners>
+		<listener class-name="com.amazon.customlisteners.MyListener"></listener>
+	</listeners>
+
 	<test name="Amazon_SigninPage_regression_Test">
 		<classes>
 			<class name="com.amazon.tests.SigninPageTest" />
 		</classes>
-	</test> <!--
-	Test -->
+	</test>
 	<test name="Amazon_RegistrationPageTest_Regression_Test">
 		<classes>
 			<class name="com.amazon.tests.RegistrationPageTest" />

@@ -6,6 +6,8 @@
 	<artifactId>amazon-selenium-framework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
+		<suiteXMLFile>sanity</suiteXMLFile>
+		<!-- mvn test -DsuiteXML="regression" -->
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 
@@ -113,7 +115,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>3.3.0</version>
-
+					<configuration>
+						<suiteXmlFiles>
+						<suiteXmlFile>testRunner/suiteFiles/${suiteXMLFile}.xml</suiteXmlFile>
+						</suiteXmlFiles>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
