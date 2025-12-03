@@ -1,18 +1,24 @@
 package com.amazon.base;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.amazon.utils.CustomWait;
 
 
 
 public class BasePage {
 
 	protected WebDriver driver;
+	protected CustomWait wait;
 
 	public BasePage(WebDriver driver) {
 		this.driver=driver;
+		wait = new CustomWait(driver,Duration.ofSeconds(10));
 	}
 
 	public WebDriver getDriver(String browser) {
