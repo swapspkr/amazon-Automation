@@ -10,6 +10,7 @@ import com.amazon.pages.HomePage;
 import com.amazon.pages.RegistrationPage;
 import com.amazon.pages.SigninPage;
 import com.amazon.pages.StartHerePage;
+import com.amazon.testdatareaders.ExcelReader;
 import com.amazon.utils.ConfigReader;
 
 public class BaseTest {
@@ -22,18 +23,27 @@ public class BaseTest {
 	public HomePage homePage;
 	public AmazonBusinessPage businessPage;
 	public ConfigReader configreader;
+	public ExcelReader excelReader;
 	
 	@BeforeMethod
 	public void baseSetup() {
-		basepage = new BasePage(driver);
-		driver = basepage.getDriver(configreader.getBrowser());
+		// 1. Load config first
+	    configreader = new ConfigReader();
+
+	    // 2. Initialize BasePage AFTER config is loaded
+	    basepage = new BasePage(driver);
+
+	    // 3. Create driver
+	    driver = basepage.getDriver(configreader.getBrowser());
+	    // 4. Open URL
 		driver.get(configreader.getUrl());
+		// 5. Initialize all page objects with valid driver
 		homePage = new HomePage(driver);
 		startherePage = new StartHerePage(driver);
 		registrationPage = new RegistrationPage(driver);
 		signinPage = new SigninPage(driver);
 		businessPage = new AmazonBusinessPage(driver);
-		configreader = new ConfigReader();
+		excelReader = new ExcelReader(".src/test/resources/testdata/"+configreader.getFileName());
 	}
 	
 	@AfterMethod

@@ -1,6 +1,8 @@
 package com.amazon.tests;
 
 
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -15,7 +17,7 @@ public class RegistrationPageTest extends BaseTest{
 	
 		// open registration page from homepage
 		homePage.openRegistrationPage();
-		
+		signinPage.setupCorrectRegistrationPage();
 	}
 
 	@Test(groups= {"sanity"})
@@ -43,6 +45,11 @@ public class RegistrationPageTest extends BaseTest{
 		Assert.assertTrue(signinPage.getSiginText().isDisplayed());
 	}
 	
-	
+	@Test(groups= {"sanity"})
+	public void fieldsOnPageTest() {
+		List<String> fieldName = excelReader.getFieldNameFromExcel("RegistrationPage");
+		Assert.assertTrue(registrationPage.verifyPresenceOfElementsOnPage(fieldName));
+		
+	}
 
 }

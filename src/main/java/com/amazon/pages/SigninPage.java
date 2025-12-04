@@ -8,6 +8,8 @@ import com.amazon.base.BasePage;
 
 public class SigninPage extends BasePage{
 	
+	@FindBy(xpath="//h1[normalize-space()='Sign in or create account']")
+	WebElement siginOrCreateAccount;
 	
 	@FindBy(id="ap_email_login")
 	WebElement email;
@@ -36,9 +38,30 @@ public class SigninPage extends BasePage{
 	@FindBy(xpath="//h1[normalize-space()='Looks like you are new to Amazon']")
 	WebElement unRegistedUserMessage;
 	
+	@FindBy(xpath="//span[contains(@id,'intention-submit-button')]//input[@type='submit']")
+	WebElement proceedToCreateAccount;
+	
+	
 	public SigninPage(WebDriver driver) {
 		super(driver);
 		
+	}
+	
+	public void setupCorrectRegistrationPage() {
+		wait.waitForElementToBeVisible(siginOrCreateAccount);
+		if(wait.getElementPresentState()==true) {
+			if(getsignOrCreateAccountHeader().isDisplayed()) {
+				getemail().sendKeys("testsdsf@dfdtrtrs.com ");
+				clickContinueBtn();
+				clickOnproceedToCreateAccount();
+			}else {
+				System.out.println("Facing issue in setting up registration page");
+			}
+		}
+	}
+	
+	public WebElement getsignOrCreateAccountHeader() {
+		return siginOrCreateAccount;
 	}
 	
 	public WebElement getSiginText() {
@@ -60,6 +83,7 @@ public class SigninPage extends BasePage{
 		wait.waitForElementToBeVisible(continueBtn);
 		return continueBtn;
 	}
+	
 	public WebElement getSiginBtn() {
 		wait.waitForElementToBeVisible(SigninBtn);
 		return SigninBtn;
@@ -95,8 +119,8 @@ public class SigninPage extends BasePage{
 		getSiginBtn().click();
 	}
 	
-	public void clickOnCreateNewAccount() {
-		
+	public void clickOnproceedToCreateAccount() {
+		proceedToCreateAccount.click();
 	}
 
 	public void clickOnCreateBusinessAccountLink() {
@@ -112,8 +136,7 @@ public class SigninPage extends BasePage{
 	}
 
 	public String getUnregisteredEmailError() {
-		return unRegistedUserMessage.getText();
-		 
+		return unRegistedUserMessage.getText();	 
 	}
 
 	

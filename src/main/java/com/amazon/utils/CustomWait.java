@@ -14,6 +14,8 @@ public class CustomWait {
 	
 	private WebDriver driver;
 	private WebDriverWait wait;
+	private boolean elementState = true;
+
 	
 	public CustomWait(WebDriver driver,Duration timeout) {
 		this.driver=driver;
@@ -24,7 +26,9 @@ public class CustomWait {
 	public void waitForVisibilityOfElement(WebElement ele) {
 		try{
 			wait.until(ExpectedConditions.visibilityOf(ele));
+			
 		}catch(TimeoutException e) {
+			setElementPresentState(false);
 			System.err.println(e.getMessage());
 		}
 	}
@@ -41,9 +45,27 @@ public class CustomWait {
 	public void waitForElementToBeVisible(WebElement ele) {
 		
 		try{
+			wait.until(ExpectedConditions.visibilityOf(ele));
+		}catch(TimeoutException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	public void waitForElementToBeInVisible(WebElement ele) {
+		
+		try{
 			wait.until(ExpectedConditions.invisibilityOf(ele));
 		}catch(TimeoutException e) {
 			System.err.println(e.getMessage());
 		}
 	}
+	
+	private void setElementPresentState(boolean state) {
+		elementState=state;
+	}
+	
+	public boolean getElementPresentState() {
+		return elementState;
+	}
+	
 }

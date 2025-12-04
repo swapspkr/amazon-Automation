@@ -33,4 +33,8 @@ public class ConfigReader {
 		return Long.parseLong(prop.getProperty("GLOBALWAIT"));
 		
 	}
+
+	public String getFileName() {	
+		return prop.getProperty("FIELDS_VERIFICATION_EXCEL");
+	}
 }

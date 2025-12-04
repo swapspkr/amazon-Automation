@@ -105,6 +105,16 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.5.1</version>
+		</dependency>
 	</dependencies>
 
 	<!-- Surefire Plugin (Runs TestNG ) -->
@@ -117,7 +127,8 @@
 					<version>3.3.0</version>
 					<configuration>
 						<suiteXmlFiles>
-						<suiteXmlFile>testRunner/suiteFiles/${suiteXMLFile}.xml</suiteXmlFile>
+							<suiteXmlFile>
+								testRunner/suiteFiles/${suiteXMLFile}.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
 				</plugin>

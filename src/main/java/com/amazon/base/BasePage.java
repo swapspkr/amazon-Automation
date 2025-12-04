@@ -28,14 +28,16 @@ public class BasePage {
 	public BasePage(WebDriver driver) {
 		this.driver=driver;
 		configreader =  new ConfigReader();
-		PageFactory.initElements(driver, this);
-		wait = new CustomWait(driver,Duration.ofSeconds(configreader.getGlobalWait()));
+		if (driver != null) {
+	        PageFactory.initElements(driver, this);
+	        wait = new CustomWait(driver, Duration.ofSeconds(configreader.getGlobalWait()));
+	    }
 		
 	}
 
 	public WebDriver getDriver(String browser) {
 
-		switch (browser) {
+		switch (browser.toLowerCase()) {
 
 		case "chrome":
 			ChromeOptions options = new ChromeOptions();

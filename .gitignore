@@ -1,1 +1,13 @@
-/target/
+# Maven / Test Output
+target/
+test-output/
+
+# IntelliJ / Eclipse
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# Logs
+*.log
