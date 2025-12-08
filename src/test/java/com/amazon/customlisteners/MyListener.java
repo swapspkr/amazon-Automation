@@ -20,7 +20,9 @@ import com.amazon.basetest.BaseTest;
 public class MyListener extends BaseTest implements ITestListener, IAnnotationTransformer {
 
 	public void onTestStart(ITestResult result) {
-		System.out.println("**** Starting test ***** Test Name=>> " + result.getName());
+		String className = result.getTestClass().getName().substring(result.getTestClass().getName().lastIndexOf(".")+1);
+		String methodName= result.getMethod().getMethodName();
+		logger.info("Started Test: "+className + "=>" +methodName);
 	}
 
 	public void onTestSuccess(ITestResult result) {
@@ -28,18 +30,21 @@ public class MyListener extends BaseTest implements ITestListener, IAnnotationTr
 	}
 
 	public void onTestFailure(ITestResult result) {
-		System.out.println("**** Test failed ! ***** Test Name=>> " + result.getName());
+		String className = result.getTestClass().getName().substring(result.getTestClass().getName().lastIndexOf(".")+1);
+		String methodName= result.getMethod().getMethodName();
+		logger.info("Test Failed : "+className + "=>" +methodName);
 
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 		String dynamicScreenshotName = result.getName() + formatter.format(now);
 
-		File fs = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		File fs = ((TakesScreenshot) getLocalDriver()).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(fs, new File(
-					System.getProperty("usr.dir") + "src/test/resources/Screenshot/" + dynamicScreenshotName + ".png"));
+					System.getProperty("usr.dir") + "./src/test/resources/Screenshot/" + dynamicScreenshotName + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 

@@ -14,13 +14,13 @@ public class RegistrationPage extends BasePage {
 	@FindBy(xpath = "//input[@id='ap_phone_number']")
 	WebElement mobileNumberField;
 
-	@FindBy(xpath = "//input[@type='submit']")
+	@FindBy(xpath = "//input[@id='ap_customer_name']")
 	WebElement yournameField;
 
-	@FindBy(xpath = "//input[@type='submit']")
+	@FindBy(xpath = "//input[@id='ap_password']")
 	WebElement passwordField;
 
-	@FindBy(xpath = "//input[@type='submit']")
+	@FindBy(xpath = "//input[@id='continue']")
 	WebElement verifyMobileNumber;
 
 	@FindBy(xpath = "//a[@id='ra-sign-in-link']")
@@ -51,19 +51,43 @@ public class RegistrationPage extends BasePage {
 	// Page Actions methods
 
 	public void enterMobileNumber(String mobileNum) {
-		getmobileNumberField().sendKeys(mobileNum);
+		try {
+			getmobileNumberField().sendKeys(mobileNum);
+			logger.info("Entered Mobile Number => "+mobileNum);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	public void enterYourName(String yourName) {
-		getyournameField().sendKeys(yourName);
+		try {
+			getyournameField().sendKeys(yourName);
+			logger.info("Entered Name => "+yourName);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	public void enterPassword(String password) {
-		getpasswordField().sendKeys(password);
+		try {
+			getpasswordField().sendKeys(password);
+			logger.info("Entered password => "+password);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	public void clickVerifyMobileNumber() {
-		getverifyMobileNumber().click();
+		try {
+			getverifyMobileNumber().click();
+			logger.info("clicked on verifyMobileNumber button..");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	// get method for page webelements
@@ -104,7 +128,7 @@ public class RegistrationPage extends BasePage {
 	}
 
 	public boolean verifyPresenceOfElementsOnPage(List<String> fieldNames) {
-		boolean result = false;
+		boolean result = true;
 		int count = 0;
 		for (String fieldname : fieldNames) {
 			WebElement element = getElementByFieldName(fieldname);
@@ -136,24 +160,24 @@ public class RegistrationPage extends BasePage {
 	private WebElement getElementByFieldName(String fieldname) {
 		WebElement element = null;
 		try {
-			switch (fieldname.toLowerCase()) {
-			case "Your Name":
+			switch (fieldname.trim().toLowerCase()) {
+			case "your name":
 				getyournameField();
 				element = yournameField;
 				break;
-			case "Mobile Number":
+			case "mobile number":
 				getmobileNumberField();
 				element = mobileNumberField;
 				break;
-			case "Password":
+			case "password":
 				getpasswordField();
 				element = passwordField;
 				break;
-			case "Verify Mobile Number":
+			case "verify mobile number":
 				getverifyMobileNumber();
 				element = verifyMobileNumber;
 				break;
-			case "Sign in Link":
+			case "sign in instead":
 				signinInstead();
 				element = signinInstead;
 				break;

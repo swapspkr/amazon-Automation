@@ -47,6 +47,7 @@ public class CustomWait {
 		try{
 			wait.until(ExpectedConditions.visibilityOf(ele));
 		}catch(TimeoutException e) {
+			setElementPresentState(false);
 			System.err.println(e.getMessage());
 		}
 	}

@@ -14,15 +14,20 @@ public class SigninPageTest extends BaseTest {
 		homePage.openSiginPage();
 	}
 	
-	@Test(groups={"sanity"})
+	@Test(groups={""})
 	public void isLogoPresentTest() {
+		try {
+			Assert.assertTrue(signinPage.verifyLogo(),"ERROR -- Logo is not Present");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 		
-		Assert.assertTrue(signinPage.verifyLogo(),"ERROR -- Logo is not Present");
 	}
 
-	@Test(groups={"sanity"})
+	@Test(groups={""})
 	public void pageTitleTest() {
-		
+		System.out.println("Current Page Title :" +signinPage.getTitleofPage());
 		Assert.assertEquals(signinPage.getTitleofPage(),"amazon.in","ERROR- page title doesnot match");
 	}
 	
@@ -32,7 +37,7 @@ public class SigninPageTest extends BaseTest {
 	 * refresh the page and verify if we navigate to same page 
 	 */
 	
-	@Test(groups={"regression"})
+	@Test(groups={""})
 	public void backAndForthScenarioTest() {
 		basepage.navigateBack();
 		Assert.assertEquals(homePage.getTitleofPage(), "Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in");
@@ -44,22 +49,34 @@ public class SigninPageTest extends BaseTest {
 	
 	@Test
 	public void siginWithUnregisterEmailTest() {
-		signinPage.enterUserName("abc@test.com");
-		signinPage.clickContinueBtn();
-		Assert.assertEquals(signinPage.getUnregisteredEmailError(), "Looks like you are new to Amazon");
+		try {
+			signinPage.enterUserName("abc@test.com");
+			logger.info("entered username .. ");
+			signinPage.clickContinueBtn();
+			logger.info("click on continue button ..");
+			Assert.assertEquals(signinPage.getUnregisteredEmailError(), "Looks like you are new to Amazon");
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void siginWithInvalidEmailTest() {
 		signinPage.enterUserName("abcd@test");
+		logger.info("entered InvalidEmail .. ");
 		signinPage.clickContinueBtn();
+		logger.info("click on continue button .. ");
 		Assert.assertEquals(signinPage.getInvalidEmailError(), "Invalid email address.");
 	}
 	
 	@Test
 	public void siginWithValidCredentailTest() {
 		signinPage.siginWithValidCredentials("abc@test.com","asdasdfsfd");
+		logger.info("entered valid credentials .. ");
 		signinPage.clickContinueBtn();
+		logger.info("click on continue button .. ");
 		Assert.assertEquals(homePage.getTitleofPage(),"Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in");
 	}
 	

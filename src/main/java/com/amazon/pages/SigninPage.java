@@ -6,143 +6,183 @@ import org.openqa.selenium.support.FindBy;
 
 import com.amazon.base.BasePage;
 
-public class SigninPage extends BasePage{
-	
-	@FindBy(xpath="//h1[normalize-space()='Sign in or create account']")
+public class SigninPage extends BasePage {
+
+	@FindBy(xpath = "//h1[normalize-space()='Sign in or create account']")
 	WebElement siginOrCreateAccount;
-	
-	@FindBy(id="ap_email_login")
+
+	@FindBy(id = "ap_email_login")
 	WebElement email;
-	
-	@FindBy(xpath="//input[@id='ap_password']")
+
+	@FindBy(xpath = "//input[@id='ap_password']")
 	WebElement password;
-	
-	@FindBy(xpath="//input[@type='submit']")
+
+	@FindBy(xpath = "//input[@type='submit']")
 	WebElement continueBtn;
-	
-	@FindBy(xpath="//a[@id='auth-fpp-link-bottom']")
+
+	@FindBy(xpath = "//a[@id='auth-fpp-link-bottom']")
 	WebElement forgotPasswordLink;
-	
-	@FindBy(xpath="//h1[normalize-space()='Sign in']")
+
+	@FindBy(xpath = "//h1[normalize-space()='Sign in']")
 	WebElement SigninText;
-	
-	@FindBy(id="signInSubmit")
+
+	@FindBy(id = "signInSubmit")
 	WebElement SigninBtn;
-	
-	@FindBy(xpath="//a[@id='ab-registration-ingress-link']")
+
+	@FindBy(xpath = "//a[@id='ab-registration-ingress-link']")
 	WebElement createNewBusinessAccount;
-	
-	@FindBy(xpath="//div[@id='invalid-email-alert']//div[@class='a-alert-content' and contains(text(),'Invalid email address.')]")
+
+	@FindBy(xpath = "//div[@id='invalid-email-alert']//div[@class='a-alert-content' and contains(text(),'Invalid email address.')]")
 	WebElement invalidEmailError;
-	
-	@FindBy(xpath="//h1[normalize-space()='Looks like you are new to Amazon']")
+
+	@FindBy(xpath = "//h1[normalize-space()='Looks like you are new to Amazon']")
 	WebElement unRegistedUserMessage;
-	
-	@FindBy(xpath="//span[contains(@id,'intention-submit-button')]//input[@type='submit']")
+
+	@FindBy(xpath = "//span[contains(@id,'intention-submit-button')]//input[@type='submit']")
 	WebElement proceedToCreateAccount;
-	
-	
+
 	public SigninPage(WebDriver driver) {
 		super(driver);
-		
+
 	}
-	
+
 	public void setupCorrectRegistrationPage() {
 		wait.waitForElementToBeVisible(siginOrCreateAccount);
-		if(wait.getElementPresentState()==true) {
-			if(getsignOrCreateAccountHeader().isDisplayed()) {
+		if (wait.getElementPresentState() == true) {
+			if (getsignOrCreateAccountHeader().isDisplayed()) {
 				getemail().sendKeys("testsdsf@dfdtrtrs.com ");
 				clickContinueBtn();
 				clickOnproceedToCreateAccount();
-			}else {
+			} else {
 				System.out.println("Facing issue in setting up registration page");
 			}
 		}
 	}
-	
+
 	public WebElement getsignOrCreateAccountHeader() {
 		return siginOrCreateAccount;
 	}
-	
+
 	public WebElement getSiginText() {
 		wait.waitForElementToBeVisible(SigninText);
 		return SigninText;
 	}
-	
+
 	public WebElement getpassword() {
 		wait.waitForElementToBeVisible(password);
 		return password;
 	}
-	
+
 	public WebElement getemail() {
 		wait.waitForElementToBeVisible(email);
 		return email;
 	}
-	
+
 	public WebElement getcontinueBtn() {
 		wait.waitForElementToBeVisible(continueBtn);
 		return continueBtn;
 	}
-	
+
 	public WebElement getSiginBtn() {
 		wait.waitForElementToBeVisible(SigninBtn);
 		return SigninBtn;
 	}
-	
+
 	public WebElement getcreateNewBusinessAccount() {
 		wait.waitForElementToBeClickable(createNewBusinessAccount);
 		return createNewBusinessAccount;
 	}
-	
+
 	public WebElement getInvalidEmailError() {
 		wait.waitForElementToBeVisible(invalidEmailError);
 		return invalidEmailError;
 	}
-	
+
 	public void enterUserName(String email) {
-		getemail().sendKeys(email);
+		try {
+			getemail().sendKeys(email);
+			logger.info("Entered email =>" + email);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
-	
+
 	public void clickContinueBtn() {
-		getcontinueBtn().click();
+		try {
+			getcontinueBtn().click();
+			logger.info("clicked on continue button =>");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
-	
+
 	public void verifyUserExists() {
-		
+
 	}
-	
+
 	public void enterPassword(String password) {
-		getpassword().sendKeys(password);
+		try {
+			getpassword().sendKeys(password);
+			logger.info("Entered password =>" + password);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
-	
+
 	public void clickSignInBtn() {
-		getSiginBtn().click();
+		try {
+			getSiginBtn().click();
+			logger.info("clicked Sigin button =>");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
-	
+
 	public void clickOnproceedToCreateAccount() {
-		proceedToCreateAccount.click();
+		try {
+			proceedToCreateAccount.click();
+			logger.info("clicked on proceedToCreateAccount =>");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	public void clickOnCreateBusinessAccountLink() {
-		
-		getcreateNewBusinessAccount().click();
+
+		try {
+			getcreateNewBusinessAccount().click();
+			logger.info("clicked on createNewBusinessAccount =>");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	public void siginWithValidCredentials(String email, String password) {
-		
-		enterUserName(email);
-		enterPassword(password);
-		clickSignInBtn();
+
+		try {
+			enterUserName(email);
+			logger.info("Entered username =>" + email);
+			enterPassword(password);
+			logger.info("Entered password =>" + password);
+			clickSignInBtn();
+			logger.info("Click on signin Button");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	public String getUnregisteredEmailError() {
-		return unRegistedUserMessage.getText();	 
+		return unRegistedUserMessage.getText();
 	}
 
-	
-
 	public void verifyPresenceOfElementOnPage() {
-		// TODO Auto-generated method stub
-		
+
 	}
 }

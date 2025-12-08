@@ -2,6 +2,8 @@ package com.amazon.base;
 
 import java.time.Duration;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,8 +23,9 @@ public class BasePage {
 	protected WebDriver driver;
 	protected CustomWait wait;
 	protected ConfigReader configreader;
+	protected static final Logger logger = LogManager.getLogger(BasePage.class);
 	
-	@FindBy(xpath="//i[@class='a-icon a-icon-logo' and @aria-label='Amazon']")
+	@FindBy(xpath="//a[@class='a-link-nav-icon']")
 	private WebElement logo;
 
 	public BasePage(WebDriver driver) {
@@ -62,7 +65,7 @@ public class BasePage {
 	}
 	
 	// common method 
-	
+		
 	// logo
 	public boolean verifyLogo() {
 		return getLogo().isDisplayed();
@@ -72,10 +75,12 @@ public class BasePage {
 	public String getTitleofPage() {
 		return driver.getTitle();
 	}
+	
 	public WebElement getLogo() {
 		wait.waitForElementToBeVisible(logo);
 		return logo;
 	}
+	
 	// current url
 	public String verifyCurrentPageUrl() {
 		return driver.getCurrentUrl();
@@ -95,6 +100,7 @@ public class BasePage {
 		driver.navigate().refresh();
 		
 	}
+
 
 	
 }
