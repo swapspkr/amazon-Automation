@@ -14,7 +14,7 @@ public class SigninPageTest extends BaseTest {
 		homePage.openSiginPage();
 	}
 	
-	@Test(groups={""})
+	@Test(groups={"sanity"})
 	public void isLogoPresentTest() {
 		try {
 			Assert.assertTrue(signinPage.verifyLogo(),"ERROR -- Logo is not Present");
@@ -25,10 +25,10 @@ public class SigninPageTest extends BaseTest {
 		
 	}
 
-	@Test(groups={""})
+	@Test(groups={"sanity"})
 	public void pageTitleTest() {
 		System.out.println("Current Page Title :" +signinPage.getTitleofPage());
-		Assert.assertEquals(signinPage.getTitleofPage(),"amazon.in","ERROR- page title doesnot match");
+		Assert.assertEquals(signinPage.getTitleofPage(),"Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in","ERROR- page title doesnot match");
 	}
 	
 	/*Verify navigate back and forth
@@ -37,7 +37,7 @@ public class SigninPageTest extends BaseTest {
 	 * refresh the page and verify if we navigate to same page 
 	 */
 	
-	@Test(groups={""})
+	@Test(groups={"regression"})
 	public void backAndForthScenarioTest() {
 		basepage.navigateBack();
 		Assert.assertEquals(homePage.getTitleofPage(), "Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in");

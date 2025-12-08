@@ -37,16 +37,22 @@ public class BaseTest {
 		return localDriver.get();
 	}
 
-	@BeforeSuite
-	public void setupSuite(ITestContext context) {
+	/*
+	 * @BeforeSuite(alwaysRun=true) public void setupSuite(ITestContext context) {
+	 * String suiteName = context.getSuite().getName(); String groupList[] =
+	 * context.getIncludedGroups(); String includedGroupList =
+	 * String.join(",",groupList);
+	 * logger.info("Starting execution for Test Suite => "
+	 * +suiteName+" with Tags => "+includedGroupList); }
+	 */
+
+	@BeforeTest(alwaysRun = true)
+	public void setupTest(ITestContext context) {
 		String suiteName = context.getSuite().getName();
 		String groupList[] = context.getIncludedGroups();
 		String includedGroupList = String.join(",",groupList);
 		logger.info("Starting execution for Test Suite => "+suiteName+" with Tags => "+includedGroupList);
-	}
 
-	@BeforeTest
-	public void setupTest(ITestContext context) {
 		String testName = context.getName();
 		logger.info("Starting Execution for Test => "+testName);
 	}
@@ -55,9 +61,9 @@ public class BaseTest {
 	public void baseSetup() {
 		// 1. Load config first
 		configreader = new ConfigReader();
-
 		// 2. Create driver FIRST — BasePage must NOT be used before driver exists
-	    driver = new BasePage(null).getDriver(configreader.getBrowser());
+	    //driver = new BasePage(null).getDriver(configreader.getBrowser());
+	    driver = BasePage.getDriver(configreader.getBrowser());
 	    localDriver.set(driver);
 
 	    basepage = new BasePage(getLocalDriver());
@@ -75,7 +81,7 @@ public class BaseTest {
 		signinPage = new SigninPage(getLocalDriver());
 		businessPage = new AmazonBusinessPage(getLocalDriver());
 		excelReader = new ExcelReader("src/test/resources/testdata/" +configreader.getFileName());
-		//homePage.clickContinueShoppingIfPresent();
+		homePage.clickContinueShoppingIfPresent();
 	}
 
 	@AfterMethod(alwaysRun = true)

@@ -3,6 +3,7 @@ package com.amazon.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import com.amazon.base.BasePage;
 
@@ -41,9 +42,12 @@ public class SigninPage extends BasePage {
 	@FindBy(xpath = "//span[contains(@id,'intention-submit-button')]//input[@type='submit']")
 	WebElement proceedToCreateAccount;
 
+	@FindBy(xpath="//i[@aria-label='Amazon']")
+	WebElement getLogo;
+	
 	public SigninPage(WebDriver driver) {
 		super(driver);
-
+		PageFactory.initElements(driver, this);
 	}
 
 	public void setupCorrectRegistrationPage() {
@@ -184,5 +188,13 @@ public class SigninPage extends BasePage {
 
 	public void verifyPresenceOfElementOnPage() {
 
+	}
+	
+	public boolean verifyLogo() {
+		return getLogo.isDisplayed();
+	}
+	
+	public String getTitleofPage() {
+		return driver.getTitle();
 	}
 }

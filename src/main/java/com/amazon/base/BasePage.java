@@ -25,21 +25,18 @@ public class BasePage {
 	protected ConfigReader configreader;
 	protected static final Logger logger = LogManager.getLogger(BasePage.class);
 	
-	@FindBy(xpath="//a[@class='a-link-nav-icon']")
+	@FindBy(xpath="//a[@id='nav-logo-sprites']")
 	private WebElement logo;
 
 	public BasePage(WebDriver driver) {
 		this.driver=driver;
-		configreader =  new ConfigReader();
-		if (driver != null) {
-	        PageFactory.initElements(driver, this);
-	        wait = new CustomWait(driver, Duration.ofSeconds(configreader.getGlobalWait()));
-	    }
-		
+		this.configreader =  new ConfigReader();
+		PageFactory.initElements(driver, this);
+		this.wait = new CustomWait(driver, Duration.ofSeconds(configreader.getGlobalWait()));	
 	}
 
-	public WebDriver getDriver(String browser) {
-
+	public static WebDriver getDriver(String browser) {
+		WebDriver driver;
 		switch (browser.toLowerCase()) {
 
 		case "chrome":
@@ -100,7 +97,5 @@ public class BasePage {
 		driver.navigate().refresh();
 		
 	}
-
-
 	
 }

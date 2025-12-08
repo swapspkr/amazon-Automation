@@ -53,7 +53,7 @@ public class RegistrationPage extends BasePage {
 	public void enterMobileNumber(String mobileNum) {
 		try {
 			getmobileNumberField().sendKeys(mobileNum);
-			logger.info("Entered Mobile Number => "+mobileNum);
+			logger.info("Entered Mobile Number => " + mobileNum);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			throw e;
@@ -63,7 +63,7 @@ public class RegistrationPage extends BasePage {
 	public void enterYourName(String yourName) {
 		try {
 			getyournameField().sendKeys(yourName);
-			logger.info("Entered Name => "+yourName);
+			logger.info("Entered Name => " + yourName);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			throw e;
@@ -73,7 +73,7 @@ public class RegistrationPage extends BasePage {
 	public void enterPassword(String password) {
 		try {
 			getpasswordField().sendKeys(password);
-			logger.info("Entered password => "+password);
+			logger.info("Entered password => " + password);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			throw e;
@@ -188,5 +188,10 @@ public class RegistrationPage extends BasePage {
 			System.out.println(e.getMessage());
 		}
 		return element;
+	}
+	
+	@Override
+	public String getTitleofPage() {
+		return driver.getTitle();
 	}
 }

@@ -18,7 +18,7 @@ public class RegistrationPageTest extends BaseTest {
 		signinPage.setupCorrectRegistrationPage();
 	}
 
-	@Test(groups = { "sanity" })
+	@Test(groups = { "" })
 	public void isLogoPresentTest() {
 
 		try {
@@ -29,7 +29,7 @@ public class RegistrationPageTest extends BaseTest {
 		}
 	}
 
-	@Test(groups = { "sanity" })
+	@Test(groups={"sanity"})
 	public void pageTitleTest() {
 
 		try {
@@ -56,7 +56,7 @@ public class RegistrationPageTest extends BaseTest {
 		Assert.assertTrue(signinPage.getSiginText().isDisplayed());
 	}
 
-	@Test(groups = { "sanity" })
+	@Test(groups = { "" })
 	public void fieldsOnPageTest() {
 		List<String> fieldName = excelReader.getFieldNameFromExcel("RegistrationPage");
 		Assert.assertTrue(registrationPage.verifyPresenceOfElementsOnPage(fieldName));
