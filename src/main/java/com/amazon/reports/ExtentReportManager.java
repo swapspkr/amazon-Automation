@@ -41,16 +41,51 @@ public class ExtentReportManager {
 		extent.flush();
 	}
 
-	public static void createCustomTable(String totalTests, String passedTests, String failedTests, String skippedTests,
-			String passPercentage) {
+	public static void createCustomTable(
+	        String totalTests, 
+	        String passedTests, 
+	        String failedTests, 
+	        String skippedTests, 
+	        String passPercentage,
+	        String browser,
+	        String url) {
 
-		String customTable = "<table style='width:100%; border: 2px solid Black; border-collapse: collapse;'>" + "<tr>"
-				+ "<th>TotalTests</th>" + "<th>Passed</th>" + "<th>Failed</th>" + "<th>Skipped</th>"
-				+ "<th>Passed%</th>" + "</tr>" + "<tr>" + "<td>" + totalTests + "</td>" + "<td>" + passedTests + "</td>"
-				+ "<td>" + failedTests + "</td>" + "<td>" + skippedTests + "</td>" + "<td>" + passPercentage + "</td>"
-				+ "</tr>" + "</table>";
-		
-		extent.setSystemInfo("Test Summary", customTable);
+	    String customTable =
+	            "<table style='width:100%; border: 2px solid Brown; border-collapse: collapse;'>"
+	            + "<tr style='background-color: #ff555e;'>"
+	            + "<th style='border: 1px solid Brown; text-align: center; font-size: 10px; width: 15%;'>Total Tests</th>"
+	            + "<th style='border: 1px solid Brown; text-align: center; font-size: 10px; width: 12%;'>Passed</th>"
+	            + "<th style='border: 1px solid Brown; text-align: center; font-size: 10px; width: 12%;'>Failed</th>"
+	            + "<th style='border: 1px solid Brown; text-align: center; font-size: 10px; width: 12%;'>Skipped</th>"
+	            + "<th style='border: 1px solid Brown; text-align: center; font-size: 10px; width: 12%;'>Passed%</th>"
+	            + "<th style='border: 1px solid Brown; text-align: center; font-size: 10px; width: 12%;'>Browser</th>"
+	            + "<th style='border: 1px solid Brown; text-align: center; font-size: 10px; width: 21%;'>URL</th>"
+	            + "</tr>"
+
+	            + "<tr>"
+	            + "<td style='border: 1px solid black; text-align: center; font-size: 10px; font-weight: bold; width: 15%;'>" 
+	                    + totalTests + "</td>"
+	            + "<td style='border: 1px solid black; text-align: center; font-size: 10px; color: green; font-weight: bold; width: 12%;'>" 
+	                    + passedTests + "</td>"
+	            + "<td style='border: 1px solid black; text-align: center; font-size: 10px; color: red; font-weight: bold; width: 12%;'>" 
+	                    + failedTests + "</td>"
+	            + "<td style='border: 1px solid black; text-align: center; font-size: 10px; color: orange; font-weight: bold; width: 12%;'>" 
+	                    + skippedTests + "</td>"
+	            + "<td style='border: 1px solid black; text-align: center; font-size: 10px; color: blue; font-weight: bold; width: 12%;'>" 
+	                    + passPercentage + "</td>"
+	            + "<td style='border: 1px solid black; text-align: center; font-size: 10px; color: blue; font-weight: bold; width: 15%;'>" 
+	                    + browser + "</td>"
+	            + "<td style='border: 1px solid black; text-align: center; font-size: 10px; color: blue; font-weight: bold; width: 21%;'>" 
+	                    + url + "</td>"
+	            + "</tr>"
+
+	            + "</table>";
+
+	    String testSummaryKey =
+	            "<div style='text-align: center; font-weight: bold; font-size: 14px;'>Test<br>Summary</div>";
+
+	    extent.setSystemInfo(testSummaryKey, customTable);
 	}
+
 
 }

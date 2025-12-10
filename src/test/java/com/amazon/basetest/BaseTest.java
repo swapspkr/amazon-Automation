@@ -128,7 +128,14 @@ public class BaseTest {
 		passPercent = passPercent*100;
 		
 		//ExtentReportManager.getReport().setSystemInfo("Passed % =>", String.format("%.2f",passPercent));
-		ExtentReportManager.createCustomTable(String.valueOf(totalTest-testSkipped), String.valueOf(testPassed), String.valueOf(testfailed), String.valueOf(testSkipped), String.format("%.2f",passPercent));
+		ExtentReportManager.createCustomTable(String.valueOf(totalTest-testSkipped), 
+				String.valueOf(testPassed), 
+				String.valueOf(testfailed), 
+				String.valueOf(testSkipped), 
+				String.format("%.2f",passPercent),
+				configreader.getBrowser(),
+				configreader.getUrl()
+				);
 		ExtentReportManager.flushReport();
 	}
 
