@@ -142,10 +142,10 @@ public class RegistrationPage extends BasePage {
 
 			if (wait.getElementPresentState() == true) {
 				if (element.isDisplayed() == true) {
-					System.out.println(fieldname + "is present on the page");
+					System.out.println(fieldname + " is present on the page");
 				}
 			} else {
-				System.out.println(fieldname + "is not present on the page");
+				System.out.println(fieldname + " is not present on the page");
 				count++;
 			}
 		}

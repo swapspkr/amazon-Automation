@@ -6,16 +6,16 @@
 			<include name="sanity"></include>
 		</run>
 	</groups>
-	
+
 	<listeners>
-	<listener class-name="com.amazon.customlisteners.MyListener"></listener>
+		<listener class-name="com.amazon.customlisteners.MyListener"></listener>
 	</listeners>
-	
+
 	<test name="Amazon_SigninPage_Sanity_Test">
 		<classes>
 			<class name="com.amazon.tests.SigninPageTest" />
 		</classes>
-	</test> 
+	</test>
 	<test name="Amazon_RegistrationPageTest_Sanity_Test">
 		<classes>
 			<class name="com.amazon.tests.RegistrationPageTest" />

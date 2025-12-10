@@ -42,8 +42,8 @@ public class SigninPage extends BasePage {
 	@FindBy(xpath = "//span[contains(@id,'intention-submit-button')]//input[@type='submit']")
 	WebElement proceedToCreateAccount;
 
-	@FindBy(xpath="//i[@aria-label='Amazon']")
-	WebElement getLogo;
+	@FindBy(xpath="//a[@class='a-link-nav-icon']")
+	WebElement amazonLogo;
 	
 	public SigninPage(WebDriver driver) {
 		super(driver);
@@ -100,6 +100,11 @@ public class SigninPage extends BasePage {
 	public WebElement getInvalidEmailError() {
 		wait.waitForElementToBeVisible(invalidEmailError);
 		return invalidEmailError;
+	}
+	
+	public WebElement getAmazonLogo() {
+		wait.waitForElementToBeVisible(amazonLogo);
+		return amazonLogo;
 	}
 
 	public void enterUserName(String email) {
@@ -191,7 +196,7 @@ public class SigninPage extends BasePage {
 	}
 	
 	public boolean verifyLogo() {
-		return getLogo.isDisplayed();
+		return getAmazonLogo().isDisplayed();
 	}
 	
 	public String getTitleofPage() {

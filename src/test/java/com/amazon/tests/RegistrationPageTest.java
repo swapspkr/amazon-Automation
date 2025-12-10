@@ -56,7 +56,7 @@ public class RegistrationPageTest extends BaseTest {
 		Assert.assertTrue(signinPage.getSiginText().isDisplayed());
 	}
 
-	@Test(groups = { "" })
+	@Test(groups = { "sanity" })
 	public void fieldsOnPageTest() {
 		List<String> fieldName = excelReader.getFieldNameFromExcel("RegistrationPage");
 		Assert.assertTrue(registrationPage.verifyPresenceOfElementsOnPage(fieldName));
