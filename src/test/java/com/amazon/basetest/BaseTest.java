@@ -1,5 +1,7 @@
 package com.amazon.basetest;
 
+import java.net.MalformedURLException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -50,8 +52,12 @@ public class BaseTest {
 	
 	  @BeforeSuite(alwaysRun = true) 
 	  public void setupSuite() {
-	  //String suiteName = context.getSuite().getName(); 
-	  ITestContext context = Reporter.getCurrentTestResult().getTestContext();
+	  ITestContext context = Reporter.getCurrentTestResult().getTestContext();  
+	  configreader = new ConfigReader();
+	  if(configreader.getParallelMode().equalsIgnoreCase("Yes")) {
+		  context.getSuite().getXmlSuite().setThreadCount(Integer.parseInt(configreader.getMaxParallelTest()));
+	  }
+	   
 	  String suiteName = context.getSuite().getName();
 	  String groupList[] =  context.getIncludedGroups(); 
 	  String includedGroupList = String.join(",",groupList); 
@@ -70,14 +76,24 @@ public class BaseTest {
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	public void baseSetup() {
+	public void baseSetup() throws MalformedURLException {
 		// 1. Load config first
 		configreader = new ConfigReader();
-		// 2. Create driver 
-		driver = BasePage.getDriver(configreader.getBrowser());
-		localDriver.set(driver);
+		// 2. temp comment
+		//driver = BasePage.getDriver(configreader.getBrowser());
+		//localDriver.set(driver);
 
-		basepage = new BasePage(getLocalDriver());
+		if(configreader.getRunMode().equalsIgnoreCase("docker")) {
+			basepage = new BasePage(getLocalDriver());
+			driver = basepage.getRemoteDriver(configreader.getBrowser());
+			logger.info("Running in docker...");
+		}else {
+			basepage = new BasePage(getLocalDriver());
+			driver = basepage.getDriver(configreader.getBrowser());
+		}
+		
+		//driver = basepage.getDriver(configreader.getBrowser());
+		localDriver.set(driver);
 		// 4. Open URL
 		getLocalDriver().get(configreader.getUrl());
 

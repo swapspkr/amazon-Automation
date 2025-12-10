@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+
+  selenium-hub:
+    image: selenium/hub:4.9.0-standalone
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"  # Dashboard and WebDriver URL
+    environment:
+      - SE_OPTS=--log-level=INFO
+    networks:
+      - selenium-grid
+
+  chrome:
+    image: selenium/node-chrome:4.9.0
+    container_name: chrome-node
+    shm_size: "1g"
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+    networks:
+      - selenium-grid
+
+  firefox:
+    image: selenium/node-firefox:4.9.0
+    container_name: firefox-node
+    shm_size: "1g"
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+    networks:
+      - selenium-grid
+
+  edge:
+    image: selenium/node-edge:4.9.0
+    container_name: edge-node
+    shm_size: "1g"
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+    networks:
+      - selenium-grid
+
+networks:
+  selenium-grid:
+    driver: bridge

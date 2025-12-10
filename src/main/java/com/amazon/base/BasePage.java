@@ -1,5 +1,7 @@
 package com.amazon.base;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +11,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -97,5 +103,37 @@ public class BasePage {
 		driver.navigate().refresh();
 		
 	}
+
+	public WebDriver getRemoteDriver(String browser) throws MalformedURLException {
+
+	    DesiredCapabilities capabilities = new DesiredCapabilities();
+
+	    if (browser.equalsIgnoreCase("chrome")) {
+	        capabilities.setBrowserName(configreader.getBrowser());
+	        ChromeOptions options = new ChromeOptions();
+	        options.addArguments("--incognito");
+	        capabilities.merge(options);
+
+	    } else if (browser.equalsIgnoreCase("firefox")) {
+	        capabilities.setBrowserName(configreader.getBrowser());
+	        FirefoxOptions options = new FirefoxOptions();
+	        options.addArguments("-private");
+	        capabilities.merge(options);
+
+	    } else {
+	        capabilities.setBrowserName(configreader.getBrowser());
+	        EdgeOptions options = new EdgeOptions();
+	        options.addArguments("--inprivate");
+	        capabilities.merge(options);
+	    }
+
+	    String gridUrl = configreader.getGridUrl();  // Fetch this from config.properties
+	    logger.info("Executiong on Grid having URL => " +gridUrl);
+	    
+	    driver = new RemoteWebDriver(new URL(gridUrl), capabilities);
+	    driver.manage().window().maximize();
+	    return driver;
+	}
+
 	
 }
