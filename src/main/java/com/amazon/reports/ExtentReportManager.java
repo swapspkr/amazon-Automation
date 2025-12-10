@@ -9,11 +9,10 @@ public class ExtentReportManager {
 	private static ExtentReports extent;
 	private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-	
 	public static void setupExtentReport() {
-		
+
 		ExtentSparkReporter sparkreporter = new ExtentSparkReporter("./extent-report/ExtentReport.html");
-		extent= new ExtentReports();
+		extent = new ExtentReports();
 		extent.attachReporter(sparkreporter);
 		sparkreporter.config().setTheme(Theme.DARK);
 		sparkreporter.config().setDocumentTitle("Automation Report");
@@ -21,22 +20,37 @@ public class ExtentReportManager {
 		extent.setSystemInfo("Browser", "Chrome");
 		extent.setSystemInfo("OS", System.getProperty("os.name"));
 	}
-	
-	public static void createTest(String testName,String groups,String className,String xmlTestName,String author) {
-		ExtentTest extentTest = extent.createTest("<b>"+testName+"</b>")
-						.assignCategory(groups,className,xmlTestName).assignAuthor(author).assignDevice("Chrome");
+
+	public static void createTest(String testName, String groups, String className, String xmlTestName, String author) {
+		ExtentTest extentTest = extent.createTest("<b>" + testName + "</b>")
+				.assignCategory(groups, className, xmlTestName)
+				.assignAuthor(author)
+				.assignDevice("Chrome");
 		test.set(extentTest);
 	}
-	
+
 	public static ExtentTest getTest() {
 		return test.get();
 	}
-	
+
 	public static ExtentReports getReport() {
 		return extent;
 	}
-	
+
 	public static void flushReport() {
 		extent.flush();
 	}
+
+	public static void createCustomTable(String totalTests, String passedTests, String failedTests, String skippedTests,
+			String passPercentage) {
+
+		String customTable = "<table style='width:100%; border: 2px solid Black; border-collapse: collapse;'>" + "<tr>"
+				+ "<th>TotalTests</th>" + "<th>Passed</th>" + "<th>Failed</th>" + "<th>Skipped</th>"
+				+ "<th>Passed%</th>" + "</tr>" + "<tr>" + "<td>" + totalTests + "</td>" + "<td>" + passedTests + "</td>"
+				+ "<td>" + failedTests + "</td>" + "<td>" + skippedTests + "</td>" + "<td>" + passPercentage + "</td>"
+				+ "</tr>" + "</table>";
+		
+		extent.setSystemInfo("Test Summary", customTable);
+	}
+
 }

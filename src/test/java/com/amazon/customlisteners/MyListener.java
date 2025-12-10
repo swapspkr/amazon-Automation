@@ -29,12 +29,12 @@ public class MyListener extends BaseTest implements ITestListener, IAnnotationTr
 		String methodName = result.getMethod().getMethodName();
 		logger.info("Started Test: " + className + "=>" + methodName);
 
+		String xmlTest = result.getTestContext().getName();
 		String groupList[] = result.getTestContext().getIncludedGroups();
 		String includedGroupList = String.join(",", groupList);
 		
-		String xmlTest = result.getTestContext().getName();
 		
-		ExtentReportManager.createTest(className + "." + methodName, includedGroupList,className,xmlTest, "John");
+		ExtentReportManager.createTest(className+"."+methodName, includedGroupList,className,xmlTest, "John");
 		ExtentReportManager.getTest().log(Status.INFO, "Test Started" + className + "=>" + methodName);
 	}
 

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -50,25 +51,21 @@ public class BaseTest {
 	  @BeforeSuite(alwaysRun = true) 
 	  public void setupSuite() {
 	  //String suiteName = context.getSuite().getName(); 
-	  //String groupList[] =  context.getIncludedGroups(); 
-	  //String includedGroupList = String.join(",",groupList); 
-	  //logger.info("Starting execution for Test Suite => " + suiteName+ " with Tags => " + includedGroupList);
+	  ITestContext context = Reporter.getCurrentTestResult().getTestContext();
+	  String suiteName = context.getSuite().getName();
+	  String groupList[] =  context.getIncludedGroups(); 
+	  String includedGroupList = String.join(",",groupList); 
+	  logger.info("Starting execution for Test Suite => " + suiteName+ " with Tags => " + includedGroupList);
 	  ExtentReportManager.setupExtentReport();
-	  //ExtentReportManager.getReport().setSystemInfo("Suite Name", suiteName); 
+	  ExtentReportManager.getReport().setSystemInfo("Suite Name", suiteName); 
 	  }
 	 
 
 	@BeforeTest(alwaysRun = true)
 	public void setupTest(ITestContext context) {
-		String suiteName = context.getSuite().getName();
-		String groupList[] = context.getIncludedGroups();
-		String includedGroupList = String.join(",", groupList);
-		logger.info("Starting execution for Test Suite => " + suiteName + " , with Tags => " + includedGroupList);
 
 		String testName = context.getName();
 		logger.info("Starting Execution for Test => " + testName);
-		
-		ExtentReportManager.setupExtentReport();
 		ExtentReportManager.getReport().setSystemInfo("Test Name", testName);
 	}
 
@@ -76,8 +73,7 @@ public class BaseTest {
 	public void baseSetup() {
 		// 1. Load config first
 		configreader = new ConfigReader();
-		// 2. Create driver FIRST — BasePage must NOT be used before driver exists
-		// driver = new BasePage(null).getDriver(configreader.getBrowser());
+		// 2. Create driver 
 		driver = BasePage.getDriver(configreader.getBrowser());
 		localDriver.set(driver);
 
@@ -123,14 +119,16 @@ public class BaseTest {
 	
 	@AfterSuite(alwaysRun = true)
 	public void generateReport() {
-		ExtentReportManager.getReport().setSystemInfo("Total test executed =>", String.valueOf(totalTest-testSkipped));
-		ExtentReportManager.getReport().setSystemInfo("Pass tests =>", String.valueOf(testPassed));
-		ExtentReportManager.getReport().setSystemInfo("Failed tests =>", String.valueOf(testfailed));
-		ExtentReportManager.getReport().setSystemInfo("Skipped tests =>", String.valueOf(testSkipped));
+		//ExtentReportManager.getReport().setSystemInfo("Total test executed =>", String.valueOf(totalTest-testSkipped));
+		//ExtentReportManager.getReport().setSystemInfo("Pass tests =>", String.valueOf(testPassed));
+		//ExtentReportManager.getReport().setSystemInfo("Failed tests =>", String.valueOf(testfailed));
+		//ExtentReportManager.getReport().setSystemInfo("Skipped tests =>", String.valueOf(testSkipped));
 		
 		double passPercent = (double)testPassed/(totalTest-testSkipped);
 		passPercent = passPercent*100;
-		ExtentReportManager.getReport().setSystemInfo("Passed % =>", String.format("%.2f",passPercent));
+		
+		//ExtentReportManager.getReport().setSystemInfo("Passed % =>", String.format("%.2f",passPercent));
+		ExtentReportManager.createCustomTable(String.valueOf(totalTest-testSkipped), String.valueOf(testPassed), String.valueOf(testfailed), String.valueOf(testSkipped), String.format("%.2f",passPercent));
 		ExtentReportManager.flushReport();
 	}
 
